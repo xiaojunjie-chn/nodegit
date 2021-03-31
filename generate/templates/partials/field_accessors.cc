@@ -143,10 +143,14 @@
           } else if (instance->{{ field.name }}.WillBeThrottled()) {
             delete baton;
           } else if (instance->{{ field.name }}.ShouldWaitForResult()) {
+            instance->Ref();
             baton->ExecuteAsync({{ field.name }}_async, {{ field.name }}_cancelAsync);
+            instance->Unref();
             delete baton;
           } else {
+            instance->Ref();
             baton->ExecuteAsync({{ field.name }}_async, {{ field.name }}_cancelAsync, nodegit::deleteBaton);
+            instance->Unref();
           }
           return;
         {% else %}
@@ -159,11 +163,15 @@
             result = baton->defaultResult;
             delete baton;
           } else if (instance->{{ field.name }}.ShouldWaitForResult()) {
+            instance->Ref();
             result = baton->ExecuteAsync({{ field.name }}_async, {{ field.name }}_cancelAsync);
+            instance->Unref();
             delete baton;
           } else {
             result = baton->defaultResult;
+            instance->Ref();
             baton->ExecuteAsync({{ field.name }}_async, {{ field.name }}_cancelAsync, nodegit::deleteBaton);
+            instance->Unref();
           }
           return result;
         {% endif %}
