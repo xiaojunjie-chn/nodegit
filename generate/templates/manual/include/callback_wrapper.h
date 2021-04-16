@@ -26,6 +26,11 @@ public:
     throttle = 0;
   }
 
+  CallbackWrapper(const CallbackWrapper &) = delete;
+  CallbackWrapper(CallbackWrapper &&) = delete;
+  CallbackWrapper &operator=(const CallbackWrapper &) = delete;
+  CallbackWrapper &operator=(CallbackWrapper &&) = delete;
+
   ~CallbackWrapper() {
     SetCallback(NULL);
   }

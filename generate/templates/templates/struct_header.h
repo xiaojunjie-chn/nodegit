@@ -39,6 +39,10 @@ class {{ cppClassName }} : public NodeGitWrapper<{{ cppClassName }}Traits> {
     friend class NodeGitWrapper<{{ cppClassName }}Traits>;
   public:
     {{ cppClassName }}({{ cType }}* raw, bool selfFreeing, v8::Local<v8::Object> owner = v8::Local<v8::Object>());
+    {{ cppClassName }}(const {{ cppClassName }} &) = delete;
+    {{ cppClassName }}({{ cppClassName }} &&) = delete;
+    {{ cppClassName }} &operator=(const {{ cppClassName }} &) = delete;
+    {{ cppClassName }} &operator=({{ cppClassName }} &&) = delete;
     static void InitializeComponent (v8::Local<v8::Object> target, nodegit::Context *nodegitContext);
 
     {% each fields as field %}

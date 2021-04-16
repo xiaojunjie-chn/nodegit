@@ -30,6 +30,10 @@ namespace nodegit {
   class Context {
   public:
     Context(v8::Isolate *isolate);
+    Context(const Context &) = delete;
+    Context(Context &&) = delete;
+    Context &operator=(const Context &) = delete;
+    Context &operator=(Context &&) = delete;
 
     ~Context();
 
@@ -59,6 +63,10 @@ namespace nodegit {
 
   class AsyncContextCleanupHandle {
     public:
+      AsyncContextCleanupHandle(const AsyncContextCleanupHandle &) = delete;
+      AsyncContextCleanupHandle(AsyncContextCleanupHandle &&) = delete;
+      AsyncContextCleanupHandle &operator=(const AsyncContextCleanupHandle &) = delete;
+      AsyncContextCleanupHandle &operator=(AsyncContextCleanupHandle &&) = delete;
       ~AsyncContextCleanupHandle();
 
     private:

@@ -9,6 +9,10 @@ namespace nodegit {
   class AsyncWorker : public Nan::AsyncWorker {
   public:
     AsyncWorker(Nan::Callback *callback, const char *resourceName);
+    AsyncWorker(const AsyncWorker &) = delete;
+    AsyncWorker(AsyncWorker &&) = delete;
+    AsyncWorker &operator=(const AsyncWorker &) = delete;
+    AsyncWorker &operator=(AsyncWorker &&) = delete;
 
     // This must be implemented by every async worker
     // so that the thread pool can lock separately
