@@ -36,5 +36,5 @@ return NodeGit.Clone(url, clonePath, opts).then((_repository) => {
 }).then((branch) => {
   assert.ok(branch instanceof NodeGit.Reference);
   parentPort.postMessage("success");
-  return promisify(setTimeout)(15000);
+  return promisify(setTimeout)(5000);
 }).catch(() => parentPort.postMessage("failure"));

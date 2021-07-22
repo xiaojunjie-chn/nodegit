@@ -1,3 +1,4 @@
+#include <iostream>
 #include "../include/context.h"
 
 namespace nodegit {
@@ -41,6 +42,7 @@ namespace nodegit {
 
   Context::~Context() {
     contexts.erase(isolate);
+    std::cout << "Context deleted\n";
   }
 
   std::shared_ptr<CleanupHandle> Context::GetCleanupHandle(std::string key) {

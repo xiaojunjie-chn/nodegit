@@ -83,7 +83,7 @@ if (Worker) {
               break;
             case "success":
               console.log("main on success\n");
-              // worker.terminate();
+              worker.terminate();
               break;
             case "failure":
               console.log("main on failure\n");
