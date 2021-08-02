@@ -7,6 +7,7 @@
 #include <string>
 #include <uv.h>
 #include <v8.h>
+// #include <vector>
 
 /*
  * Determine if node module is compiled under a supported node release.
@@ -54,6 +55,8 @@ namespace nodegit {
 
     void ShutdownThreadPool(std::unique_ptr<AsyncContextCleanupHandle> cleanupHandle);
 
+    void SetLastObjectWrap(Nan::ObjectWrap *objectWrap);
+
   private:
     v8::Isolate *isolate;
 
@@ -66,6 +69,8 @@ namespace nodegit {
     Nan::Global<v8::Object> persistentStorage;
 
     std::map<std::string, std::shared_ptr<CleanupHandle>> cleanupHandles;
+
+    Nan::ObjectWrap *testLastObjectWrap = nullptr;
 
     static std::map<v8::Isolate *, Context *> contexts;
   };

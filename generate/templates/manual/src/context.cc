@@ -41,6 +41,9 @@ namespace nodegit {
   }
 
   Context::~Context() {
+    if (testLastObjectWrap != nullptr) {
+      delete testLastObjectWrap;
+    }
     contexts.erase(isolate);
     std::cout << "Context deleted\n";
   }
@@ -85,5 +88,9 @@ namespace nodegit {
 
   void Context::ShutdownThreadPool(std::unique_ptr<AsyncContextCleanupHandle> cleanupHandle) {
     threadPool.Shutdown(std::move(cleanupHandle));
+  }
+
+  void Context::SetLastObjectWrap(Nan::ObjectWrap *objectWrap) {
+    testLastObjectWrap = objectWrap;
   }
 }

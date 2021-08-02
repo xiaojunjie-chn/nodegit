@@ -37,7 +37,7 @@ public:
   // a separate issue.
   bool selfFreeing;
 
-  const nodegit::Context *nodegitContext = nullptr;
+  nodegit::Context *nodegitContext = nullptr;
 
 protected:
   cType *raw;

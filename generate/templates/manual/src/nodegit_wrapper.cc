@@ -37,6 +37,8 @@ NodeGitWrapper<Traits>::NodeGitWrapper(typename Traits::cType *raw, bool selfFre
   } else {
     NonSelfFreeingConstructedCount++;
   }
+
+  nodegitContext->SetLastObjectWrap(this);
 }
 
 template<typename Traits>
@@ -80,6 +82,11 @@ NAN_METHOD(NodeGitWrapper<Traits>::JSNewFunction) {
   }
 
   instance->Wrap(info.This());
+  // {
+  //   Nan::HandleScope scope;
+  //   v8::Local<v8::Object> jsWrapper = Nan::New(instance->persistent());
+  //   std::cout<< "JSNewFunction *(info.This() " << *(info.This()) << " *persistent() " << *jsWrapper << std::endl;
+  // }
   info.GetReturnValue().Set(info.This());
 }
 
