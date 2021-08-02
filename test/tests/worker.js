@@ -67,7 +67,7 @@ if (Worker) {
       });
     });
 
-    for (let i = 0; i < 2; ++i) {
+    for (let i = 0; i < 1; ++i) {
       it.only(`can kill worker thread while in use #${i}`, function(done) { // jshint ignore:line
         const workerPath = local("../utils/worker.js");
         const worker = new Worker(workerPath, {
@@ -83,7 +83,7 @@ if (Worker) {
               break;
             case "success":
               console.log("main on success\n");
-              worker.terminate();
+              // worker.terminate();
               break;
             case "failure":
               console.log("main on failure\n");
