@@ -24,6 +24,18 @@ NodeGitWrapper<Traits>::NodeGitWrapper(typename Traits::cType *raw, bool selfFre
       Traits::duplicate(&this->raw, raw);
       selfFreeing = true;
     } else {
+      {
+        Nan::HandleScope scope;
+        v8::Local<v8::Value> owner_value;
+        v8::Local<v8::Context> context = Nan::GetCurrentContext();
+
+        owner->Get(context, 0).ToLocal(&owner_value);
+        v8::Local<v8::Object> owner_object = owner_value->ToObject(context).ToLocalChecked();
+        void* ptr = owner_object->GetAlignedPointerFromInternalField(0);
+        ObjectWrap* wrap = static_cast<ObjectWrap*>(ptr);
+        std::cout<< "owner internal field: " << wrap << std::endl;
+      }
+
       this->owner.Reset(owner);
       this->raw = raw;
     }
@@ -82,6 +94,25 @@ NAN_METHOD(NodeGitWrapper<Traits>::JSNewFunction) {
   }
 
   instance->Wrap(info.This());
+
+  {
+    Nan::HandleScope scope;
+
+    v8::Local<v8::Object> object = info.This();
+    void* ptr = object->GetAlignedPointerFromInternalField(0);
+    ObjectWrap* wrap = static_cast<ObjectWrap*>(ptr);
+    std::cout<< "JSNewFunction internal field: " << wrap << std::endl;
+  }
+
+  // {
+  //   Nan::HandleScope scope;
+
+  //   v8::Local<v8::Object> object = info.This();
+  //   v8::Local<v8::External> testWrap = v8::Local<v8::External>::Cast(object->GetInternalField(0));
+  //   void* ptr = testWrap->Value();
+  //   std::cout<< "JSNewFunction internal field: " << ptr << std::endl;
+  // }
+
   // {
   //   Nan::HandleScope scope;
   //   v8::Local<v8::Object> jsWrapper = Nan::New(instance->persistent());

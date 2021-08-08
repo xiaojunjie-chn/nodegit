@@ -28,8 +28,8 @@ if (Worker) {
 
     beforeEach(function() {
 
-      // return delay(14000)
-      return delay(1)
+      return delay(14000)
+      // return delay(1)
       .then(function() {
         return fse.remove(clonePath).catch(function(err) {
           console.log(err);
