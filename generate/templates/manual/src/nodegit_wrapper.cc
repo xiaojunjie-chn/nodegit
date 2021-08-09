@@ -50,7 +50,7 @@ NodeGitWrapper<Traits>::NodeGitWrapper(typename Traits::cType *raw, bool selfFre
     NonSelfFreeingConstructedCount++;
   }
 
-  nodegitContext->SetLastObjectWrap(this);
+  nodegitContext->AddNativeWrappedObject(this);
 }
 
 template<typename Traits>
@@ -101,7 +101,7 @@ NAN_METHOD(NodeGitWrapper<Traits>::JSNewFunction) {
     v8::Local<v8::Object> object = info.This();
     void* ptr = object->GetAlignedPointerFromInternalField(0);
     ObjectWrap* wrap = static_cast<ObjectWrap*>(ptr);
-    std::cout<< "JSNewFunction internal field: " << wrap << std::endl;
+    std::cout<< "JSNewFunction instance: " << instance << "; internal field: " << wrap << std::endl;
   }
 
   // {

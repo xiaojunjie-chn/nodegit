@@ -14,18 +14,29 @@ describe("Revwalk", function() {
 
   var reposPath = local("../repos/workdir");
 
+  function delay(t, v) {
+    return new Promise(function(resolve) { 
+        setTimeout(resolve.bind(null, v), t);
+    });
+  }
+
   // Set a reasonable timeout here now that our repository has grown.
   this.timeout(120000);
 
   beforeEach(function() {
     var test = this;
-    return Repository.open(reposPath)
-      .then(function(repository) {
-        test.repository = repository;
-        return test.repository.getBranchCommit("rev-walk");
-      })
-      .then(function(commit) {
-        test.commit = commit;
+
+    // return delay(14000)
+    return delay(1)
+    .then(function() {
+      return Repository.open(reposPath)
+        .then(function(repository) {
+          test.repository = repository;
+          return test.repository.getBranchCommit("rev-walk");
+        })
+        .then(function(commit) {
+          test.commit = commit;
+        });
       });
   });
 
