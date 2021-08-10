@@ -67,15 +67,51 @@ if (Worker) {
       });
     });
 
-    for (let i = 0; i < 1; ++i) {
-      it.only(`can kill worker thread while in use #${i}`, function(done) { // jshint ignore:line
-        const workerPath = local("../utils/worker.js");
-        const worker = new Worker(workerPath, {
-          workerData: {
-            clonePath,
-            url: "https://github.com/nodegit/test.git"
-          }
-        });
+    // for (let i = 0; i < 1; ++i) {
+    //   it(`can kill worker thread while in use #${i}`, function(done) {
+       // jshint ignore:line
+    //     const workerPath = local("../utils/worker.js");
+    //     const worker = new Worker(workerPath, {
+    //       workerData: {
+    //         clonePath,
+    //         url: "https://github.com/nodegit/test.git"
+    //       }
+    //     });
+    //     worker.on("message", (message) => {
+    //       switch (message) {
+    //         case "init":
+    //           console.log("main on init\n");
+    //           break;
+    //         case "success":
+    //           console.log("main on success\n");
+    //           worker.terminate();
+    //           break;
+    //         case "failure":
+    //           console.log("main on failure\n");
+    //           assert.fail();
+    //           break;
+    //       }
+    //     });
+    //     worker.on("error", () => {
+    //       console.log("main on error\n");
+    //       assert.fail();
+    //     });
+    //     worker.on("exit", (code, signal) => {
+    //       console.log("main on exit with code", code);
+    //       console.log(" and signal ", signal, "\n");
+    //       if (code === 1) {
+    //         done();
+    //       } else {
+    //         assert.fail();
+    //       }
+    //     });
+    //   });
+    // }
+
+    for (let i = 0; i < 3; ++i) {
+      it.only(`can kill worker_blame thread while in use #${i}`, function(done) { // jshint ignore:line
+        const workerPath = local("../utils/worker_blame.js");
+        const worker = new Worker(workerPath);
         worker.on("message", (message) => {
           switch (message) {
             case "init":

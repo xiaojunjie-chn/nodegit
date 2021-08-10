@@ -53,6 +53,12 @@ namespace nodegit {
       for (Nan::ObjectWrap *o : nativeWrappedObjects) {
         delete o;
       }
+
+      // // reverse order, to make it crash
+      // std::vector<Nan::ObjectWrap*>::reverse_iterator rIt {};
+      // for (rIt = nativeWrappedObjects.rbegin(); rIt != nativeWrappedObjects.rend(); ++rIt) {
+      //   delete *rIt;
+      // }
     }
     contexts.erase(isolate);
     std::cout << "Context deleted\n";
