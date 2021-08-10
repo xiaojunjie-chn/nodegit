@@ -4,7 +4,7 @@ template<typename Traits>
 NodeGitWrapper<Traits>::NodeGitWrapper(typename Traits::cType *raw, bool selfFreeing, v8::Local<v8::Object> owner)
   : nodegitContext(nodegit::Context::GetCurrentContext()) {
   std::cout << "::" << Traits::className() << "() " << this << " " << std::endl;
-  std::cout << "raw: " << raw << " *owner: " << *owner << std::endl;
+  // std::cout << "raw: " << raw << " *owner: " << *owner << std::endl;
   if (Traits::isSingleton) {
     ReferenceCounter::incrementCountForPointer((void *)raw);
     this->raw = raw;
@@ -24,17 +24,17 @@ NodeGitWrapper<Traits>::NodeGitWrapper(typename Traits::cType *raw, bool selfFre
       Traits::duplicate(&this->raw, raw);
       selfFreeing = true;
     } else {
-      {
-        Nan::HandleScope scope;
-        v8::Local<v8::Value> owner_value;
-        v8::Local<v8::Context> context = Nan::GetCurrentContext();
+      // {
+      //   Nan::HandleScope scope;
+      //   v8::Local<v8::Value> owner_value;
+      //   v8::Local<v8::Context> context = Nan::GetCurrentContext();
 
-        owner->Get(context, 0).ToLocal(&owner_value);
-        v8::Local<v8::Object> owner_object = owner_value->ToObject(context).ToLocalChecked();
-        void* ptr = owner_object->GetAlignedPointerFromInternalField(0);
-        ObjectWrap* wrap = static_cast<ObjectWrap*>(ptr);
-        std::cout<< "owner internal field: " << wrap << std::endl;
-      }
+      //   owner->Get(context, 0).ToLocal(&owner_value);
+      //   v8::Local<v8::Object> owner_object = owner_value->ToObject(context).ToLocalChecked();
+      //   void* ptr = owner_object->GetAlignedPointerFromInternalField(0);
+      //   ObjectWrap* wrap = static_cast<ObjectWrap*>(ptr);
+      //   std::cout<< "owner internal field: " << wrap << std::endl;
+      // }
 
       this->owner.Reset(owner);
       this->raw = raw;
@@ -64,7 +64,7 @@ NodeGitWrapper<Traits>::NodeGitWrapper(const char *error)
 template<typename Traits>
 NodeGitWrapper<Traits>::~NodeGitWrapper() {
   std::cout << "::~" << Traits::className() << "() " << this << " " << std::endl;
-  std::cout << "raw: " << raw << std::endl;
+  // std::cout << "raw: " << raw << std::endl;
   if (Traits::isFreeable && selfFreeing) {
     Traits::free(raw);
     SelfFreeingInstanceCount--;
@@ -95,14 +95,14 @@ NAN_METHOD(NodeGitWrapper<Traits>::JSNewFunction) {
 
   instance->Wrap(info.This());
 
-  {
-    Nan::HandleScope scope;
+  // {
+  //   Nan::HandleScope scope;
 
-    v8::Local<v8::Object> object = info.This();
-    void* ptr = object->GetAlignedPointerFromInternalField(0);
-    ObjectWrap* wrap = static_cast<ObjectWrap*>(ptr);
-    std::cout<< "JSNewFunction instance: " << instance << "; internal field: " << wrap << std::endl;
-  }
+  //   v8::Local<v8::Object> object = info.This();
+  //   void* ptr = object->GetAlignedPointerFromInternalField(0);
+  //   ObjectWrap* wrap = static_cast<ObjectWrap*>(ptr);
+  //   std::cout<< "JSNewFunction instance: " << instance << "; internal field: " << wrap << std::endl;
+  // }
 
   // {
   //   Nan::HandleScope scope;

@@ -11,7 +11,13 @@ namespace nodegit {
 #else
       handle(nullptr)
 #endif
-  {}
+  {
+#if IS_CONTEXT_AWARE_NODE_MODULE_VERSION
+      std::cout<< "AsyncContextCleanupHandle: IT IS Context Aware" << std::endl;
+#else
+      std::cout<< "AsyncContextCleanupHandle: IT IS NOT Context Aware" << std::endl;
+#endif
+  }
 
   AsyncContextCleanupHandle::~AsyncContextCleanupHandle() {
     delete context;
@@ -33,6 +39,8 @@ namespace nodegit {
     : isolate(isolate)
     , threadPool(10, node::GetCurrentEventLoop(isolate), this)
   {
+    std::cout<< "Context created. NODE_MODULE_VERSION: " << NODE_MODULE_VERSION << std::endl;
+
     Nan::HandleScope scopoe;
     v8::Local<v8::Object> storage = Nan::New<v8::Object>();
     persistentStorage.Reset(storage);

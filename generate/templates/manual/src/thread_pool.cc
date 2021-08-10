@@ -7,6 +7,7 @@
 #include <queue>
 #include <thread>
 #include <utility>
+#include <iostream>
 
 extern "C" {
   #include <git2/sys/custom_tls.h>
@@ -722,11 +723,13 @@ namespace nodegit {
     asyncCallbackData->pool = nullptr;
 
 #if IS_CONTEXT_AWARE_NODE_MODULE_VERSION
+    std::cout<< "thread_pool.cc: IT IS Context Aware" << std::endl;
     uv_close(reinterpret_cast<uv_handle_t *>(&jsThreadCallbackAsync), [](uv_handle_t *handle) {
       auto closeAsyncCallbackData = static_cast<AsyncCallbackData *>(handle->data);
       delete closeAsyncCallbackData;
     });
 #else
+    std::cout<< "thread_pool.cc: IT IS NOT Context Aware" << std::endl;
     // NOTE We are deliberately leaking this pointer because `async` cleanup in
     // node has not completely landed yet. Trying to cleanup this pointer
     // is probably not worth the fight as it's very little memory lost per context

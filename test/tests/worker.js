@@ -28,8 +28,8 @@ if (Worker) {
 
     beforeEach(function() {
 
-      // return delay(14000)
-      return delay(1)
+      return delay(14000)
+      // return delay(1)
       .then(function() {
         return fse.remove(clonePath).catch(function(err) {
           console.log(err);
@@ -68,7 +68,7 @@ if (Worker) {
     });
 
     for (let i = 0; i < 1; ++i) {
-      it(`can kill worker thread while in use #${i}`, function(done) { // jshint ignore:line
+      it.only(`can kill worker thread while in use #${i}`, function(done) { // jshint ignore:line
         const workerPath = local("../utils/worker.js");
         const worker = new Worker(workerPath, {
           workerData: {
