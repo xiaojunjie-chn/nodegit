@@ -22,7 +22,7 @@ var test;
 var fileName = "foobar.js";
 var repoPath = local("../repos/blameRepo");
 
-let creaRepo = function() {
+const createRepo = function() {
   return RepoUtils.createRepository(repoPath)
     .then(function(repository) {
       test.repository = repository;
@@ -35,11 +35,11 @@ let creaRepo = function() {
     });
 };
 
-creaRepo();
-
-return Blame.file(test.repository, fileName)
+createRepo().then(function () {
+  return Blame.file(test.repository, fileName)
   .then(function(blame) {
     assert(blame);
     parentPort.postMessage("success");
     return promisify(setTimeout)(15000);
   }).catch(() => parentPort.postMessage("failure"));
+});
